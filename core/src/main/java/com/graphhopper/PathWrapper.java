@@ -17,6 +17,7 @@
  */
 package com.graphhopper;
 
+import com.graphhopper.routing.SurfaceInformation;
 import com.graphhopper.util.InstructionList;
 import com.graphhopper.util.PointList;
 import com.graphhopper.util.shapes.BBox;
@@ -43,6 +44,7 @@ public class PathWrapper {
     private InstructionList instructions;
     private PointList waypointList = PointList.EMPTY;
     private PointList pointList = PointList.EMPTY;
+    private SurfaceInformation surfaceInformation;
 
     /**
      * @return the description of this route alternative to make it meaningful for the user e.g. it
@@ -89,6 +91,19 @@ public class PathWrapper {
             throw new IllegalStateException("Cannot call setPoint twice");
 
         pointList = points;
+        return this;
+    }
+
+    /**
+     * This method returns all Information about the surface.
+     */
+    public SurfaceInformation getSurfaceInformation() {
+        check("getSurfaceInformation");
+        return surfaceInformation;
+    }
+
+    public PathWrapper setSurfaceInformation(SurfaceInformation surfaceInformation) {
+        this.surfaceInformation = surfaceInformation;
         return this;
     }
 

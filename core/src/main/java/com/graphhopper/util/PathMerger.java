@@ -19,6 +19,7 @@ package com.graphhopper.util;
 
 import com.graphhopper.PathWrapper;
 import com.graphhopper.routing.Path;
+import com.graphhopper.routing.SurfaceInformation;
 import com.graphhopper.util.exceptions.ConnectionNotFoundException;
 
 import java.util.ArrayList;
@@ -75,6 +76,10 @@ public class PathMerger {
             fullTimeInMillis += path.getTime();
             fullDistance += path.getDistance();
             fullWeight += path.getWeight();
+            
+            SurfaceInformation surfaceInformation = new SurfaceInformation(path.calcEdges());
+            altRsp.setSurfaceInformation(surfaceInformation);
+
             if (enableInstructions) {
                 InstructionList il = path.calcInstructions(tr);
 
