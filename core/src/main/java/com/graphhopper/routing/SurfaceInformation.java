@@ -10,8 +10,8 @@ import com.graphhopper.routing.util.EncodingManager;
 import com.graphhopper.util.EdgeIteratorState;
 
 public class SurfaceInformation {
-    public Map<Integer, Double> surfaceMap = new HashMap<>();
-    public Map<Integer, Double> highwayMap = new HashMap<>();
+    public Map<String, Double> surfaceMap = new HashMap<>();
+    public Map<String, Double> streetTypeMap = new HashMap<>();
 
     private DataFlagEncoder dataFlagEncoder = new DataFlagEncoder();
 
@@ -20,15 +20,16 @@ public class SurfaceInformation {
         new EncodingManager(Arrays.asList(dataFlagEncoder), 8);
 
         for (EdgeIteratorState edge : edges) {
-            int surfaceType = dataFlagEncoder.getSurface(edge);
+
+            String surfaceType = dataFlagEncoder.getSurfaceAsString(edge);
             double distanceOnSurface = surfaceMap.containsKey(surfaceType) ? surfaceMap.get(surfaceType) : 0;
             distanceOnSurface += edge.getDistance();
             surfaceMap.put(surfaceType, distanceOnSurface);
 
-            int highwayType = dataFlagEncoder.getHighway(edge);
-            double distanceOnHighway = highwayMap.containsKey(highwayType) ? highwayMap.get(highwayType) : 0;
+            String highwayType = dataFlagEncoder.getHighwayAsString(edge);
+            double distanceOnHighway = streetTypeMap.containsKey(highwayType) ? streetTypeMap.get(highwayType) : 0;
             distanceOnHighway += edge.getDistance();
-            highwayMap.put(highwayType, distanceOnHighway);
+            streetTypeMap.put(highwayType, distanceOnHighway);
         }
     }
 }

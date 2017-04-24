@@ -19,6 +19,7 @@ package com.graphhopper.http;
 
 import com.graphhopper.GHResponse;
 import com.graphhopper.PathWrapper;
+import com.graphhopper.routing.PathStatistics;
 import com.graphhopper.util.Helper;
 import com.graphhopper.util.InstructionList;
 import com.graphhopper.util.PointList;
@@ -99,10 +100,8 @@ public class SimpleRouteSerializer implements RouteSerializer {
                     jsonPath.put("ascend", ar.getAscend());
                     jsonPath.put("descend", ar.getDescend());
                     
-                    
-
-                    jsonPath.put("surface", ar.getSurfaceInformation().surfaceMap);
-                    jsonPath.put("highway", ar.getSurfaceInformation().highwayMap);
+                    PathStatistics pathStatistics = new PathStatistics(ar.getSurfaceInformation());
+                    jsonPath.put("statistics", pathStatistics.createJSON());
                     
                 }
 
